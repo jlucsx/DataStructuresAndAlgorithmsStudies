@@ -86,6 +86,12 @@ void insertAtGivenPosition(Node **head, int id, int position)
 {
     Node *current = *head;
     Node *newNode = createListNode(id);
+    bool listIsEmpty = checkIfListIsEmpty(current);
+    if (listIsEmpty)
+    {
+        *head = newNode;
+        return;
+    }
     if (position < 0)
     {
         printf("There's no such nonsense as position %d in this list.\n", position);
@@ -102,12 +108,6 @@ void insertAtGivenPosition(Node **head, int id, int position)
     if (!newNode)
     {
         printf("Memory Error\n");
-        return;
-    }
-    bool listIsEmpty = checkIfListIsEmpty(current);
-    if (listIsEmpty)
-    {
-        *head = newNode;
         return;
     }
     while (currentPos < position - 1 &&
