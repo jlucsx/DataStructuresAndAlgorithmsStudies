@@ -43,14 +43,14 @@ void insertAtTheEnd(Node **head, int id)
 
 void insertAtGivenPosition(Node **head, int id, int position)
 {
-    Node *current = *head;
+    bool listIsEmpty = checkIfListIsEmpty(*head);
     Node *newNode = createListNode(id);
-    bool listIsEmpty = checkIfListIsEmpty(current);
     if (listIsEmpty)
     {
         *head = newNode;
         return;
     }
+    Node *current = *head;
     if (position < 0)
     {
         printf("There's no such nonsense as position %d in this list.\n", position);
@@ -94,13 +94,13 @@ void insertAtGivenPosition(Node **head, int id, int position)
 
 void deleteFirstNode(Node **head)
 {
-    Node *firstNode = *head;
-    bool listIsEmpty = checkIfListIsEmpty(firstNode);
+    bool listIsEmpty = checkIfListIsEmpty(*head);
     if (listIsEmpty)
     {
         printf("There's nothing to do here then.\n");
         return;
     }
+    Node *firstNode = *head;
     (*head) = firstNode->next;
     (*head)->previous = NULL;
     //deletion
@@ -109,16 +109,57 @@ void deleteFirstNode(Node **head)
 
 void deleteLastNode(Node **head)
 {
-    Node *current = *head;
-    bool listIsEmpty = checkIfListIsEmpty(current);
+    bool listIsEmpty = checkIfListIsEmpty(*head);
     if (listIsEmpty)
     {
         printf("There's nothing to do here then.\n");
         return;
     }
+    Node *current = *head;
     while (current->next != NULL)
         current = current->next;
     Node *penultimateNode = current->previous;
     penultimateNode->next = NULL;
+    free(current);
+}
+
+void deleteNodeAtGivenPosition(Node **head, int position)
+{
+    bool listIsEmpty = checkIfListIsEmpty(*head);
+    if (listIsEmpty)
+    {
+        printf("There's nothing to do here then.\n");
+        return;
+    }
+    Node *current = *head;
+    if (position == 0)
+    {
+        (*head) = current->next;
+        (*head)->previous = NULL;
+        free(current);
+        return;
+    }
+    int currentPos = 0;
+    while (currentPos < position && current != NULL)
+    {
+        current = current->next;
+        currentPos++;
+    }
+    if (currentPos < position)
+    {
+        printf("Position %d do not exist.\n", position);
+        return;
+    }
+    if (current->next == NULL)
+    {
+        Node *penultimateNode = current->previous;
+        penultimateNode->next = NULL;
+        free(current);
+        return;
+    }
+    Node *previousToSelectedNode = current->previous;
+    Node *nextToSeletectedNode = current->next;
+    previousToSelectedNode->next = nextToSeletectedNode;
+    nextToSeletectedNode->previous = previousToSelectedNode;
     free(current);
 }

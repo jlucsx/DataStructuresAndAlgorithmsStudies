@@ -40,3 +40,34 @@ void printTheList(Node *head)
         currentNode = currentNode->next;
     }
 }
+
+int listLength(Node **head)
+{
+    int counter = 0;
+    Node *current = *head;
+    while (current != NULL)
+    {
+        current = current->next;
+        counter++;
+    }
+    return counter;
+}
+
+int searchForGivenId(Node **head, int id)
+{
+    int position = 0;
+    Node *current = *head;
+    while (current != NULL && current->id != id)
+    {
+        current = current->next;
+        position++;
+    }
+    if (current == NULL)
+    {
+        printf("There is no Node registered under id #%d.\n", id);
+        return -1;
+    }
+    else {
+        return position;
+    }
+}
