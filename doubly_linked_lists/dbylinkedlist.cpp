@@ -6,6 +6,7 @@ int main(void) {
   insertAtTheBeginning(&doublyLinkedList, 15);
   insertAtTheBeginning(&doublyLinkedList, 4);
   insertAtTheEnd(&doublyLinkedList, 40);
+  insertAtGivenPosition(&doublyLinkedList, 74, 4);
   printTheList(doublyLinkedList);
   return 0;
 }
