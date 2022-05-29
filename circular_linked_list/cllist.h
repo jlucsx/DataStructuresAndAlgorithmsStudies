@@ -135,4 +135,5 @@ void insertNodeAtBeginning(cllControl *control, string data)
     addAsNextOf(newNode, control->head);
     control->head = newNode;
     addAsNextOf(control->tail, newNode);
+    control->listLength++;
 }
