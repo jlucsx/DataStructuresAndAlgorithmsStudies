@@ -137,3 +137,30 @@ void insertNodeAtBeginning(cllControl *control, string data)
     addAsNextOf(control->tail, newNode);
     control->listLength++;
 }
+
+void deletedLastNode(cllControl *control)
+{
+    cllNode *current = control->head;
+    if (isTheListEmpty(control->head))
+        return;
+    do
+    {
+        current = current->next;
+    } while (current->next != control->tail);
+    addAsNextOf(current, control->head);
+    free(control->tail);
+    control->tail = current;
+    control->listLength--;
+}
+
+void deleteFirstNode(cllControl *control)
+{
+    cllNode *currentHead = control->head;
+    cllNode *currentTail = control->tail;
+    if (isTheListEmpty(control->head))
+        return; 
+    addAsNextOf(currentTail, currentHead->next);
+    free(control->head);
+    control->head = currentTail->next;
+    control->listLength--;
+}
