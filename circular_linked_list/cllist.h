@@ -48,14 +48,21 @@ cllNode *createListNode(string data)
     return tmp;
 }
 
-bool checkIfListIsEmpty(cllNode *head)
+bool isTheListEmpty(cllNode *head)
 {
     if (head == nullptr)
         return true;
     return false;
 }
 
-//For testing purposes <
+void createList(cllControl *listControl, cllNode *newHead)
+{
+    listControl->head = newHead;
+    listControl->tail = newHead;
+    listControl->listLength = 1;
+}
+
+// For testing purposes <
 int length(cllNode *head)
 {
     cllNode *current = head;
@@ -69,7 +76,7 @@ int length(cllNode *head)
     } while (current != head);
     return count;
 }
-//For testing purposes >
+// For testing purposes >
 
 void printList(cllNode *head)
 {
@@ -85,22 +92,47 @@ void printList(cllNode *head)
     printnl();
 }
 
+bool wasMemoryAllocatedSuccessfully(cllNode *allocatedNode)
+{
+    if (!allocatedNode)
+    {
+        cout << "Memory Error!" << endl;
+        return false;
+    }
+    return true;
+}
+
 void insertNodeAtEnd(cllControl *control, string data)
 {
     cllNode *newNode = createListNode(data);
-    if (!newNode)
+    if (!wasMemoryAllocatedSuccessfully(newNode))
     {
-        cout << "Memory Error!" << endl;
         return;
     }
-    bool listIsEmpty = checkIfListIsEmpty(control->head);
-    if (listIsEmpty)
+    if (isTheListEmpty(control->head))
     {
-        (control->head) = newNode;
+        createList(control, newNode);
         return;
     }
     addAsNextOf(control->tail, newNode);
     control->tail = newNode;
     addAsNextOf(newNode, control->head);
     control->listLength++;
+}
+
+void insertNodeAtBeginning(cllControl *control, string data)
+{
+    cllNode *newNode = createListNode(data);
+    if (!wasMemoryAllocatedSuccessfully(newNode))
+    {
+        return;
+    }
+    if (isTheListEmpty(control->head))
+    {
+        createList(control, newNode);
+        return;
+    }
+    addAsNextOf(newNode, control->head);
+    control->head = newNode;
+    addAsNextOf(control->tail, newNode);
 }

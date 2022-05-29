@@ -8,6 +8,7 @@ int main(void)
     insertNodeAtEnd(circularListControl, "29/05/2022");
     insertNodeAtEnd(circularListControl, "30/05/2022");
     insertNodeAtEnd(circularListControl, "31/05/2022");
+    insertNodeAtBeginning(circularListControl, "27/05/2022");
 
     printList(circularListControl->head);
     printf("Length of the list is %d.\n", length(head));
